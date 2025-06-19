@@ -1,6 +1,4 @@
 #include <iostream>
-#include <vector>
-#include <cmath>
 
 class Node {
 public: // everything must be public
@@ -55,13 +53,13 @@ public:
     // deletes head and moves head to the next index
     void deleteFirst() { 
         if(length == 0) {
-            std::cout << "Everything is already gone..."; 
+            std::cout << "Everything has already been removed!\n"; 
             return; 
         }
         else if(length == 1) {
             head = nullptr; 
             tail = nullptr; 
-            std::cout << "Everything is deleted!";
+            std::cout << "Everything is deleted!\n";
         }
         else {
             Node *temp = head->next; 
@@ -129,7 +127,7 @@ public:
     // can replace a node's value at any and returns true if the operation went through
     bool setNode(const int &index, const int &value) { 
         if(index < 0 || index >= length) {
-            std::cout << "Invalid index!"; 
+            std::cout << "Invalid index!\n"; 
             return false; 
         }
         
