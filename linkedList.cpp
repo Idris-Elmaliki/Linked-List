@@ -1,25 +1,27 @@
 #include <iostream>
 
+template<class T>
 class Node {
 public: // everything must be public
-    int value; 
+    T value; 
     Node* next; 
 
     // Node constructor
-    Node(const int &value = 0)
+    Node(const T &value)
     : value(value) {
         next = nullptr;
     }
 }; 
 
 // class that creates the methods to create a linked list
+template<class T>
 class LinkedList {
-    Node* head, *tail; 
+    Node<T> *head, *tail; 
     int length;
 
 public: 
     // constructor that creates the first node
-    LinkedList(const int &value) { 
+    LinkedList(const T &value) { 
         Node* newNode = new Node(value); 
         head = newNode; 
         tail = newNode;  
@@ -27,7 +29,7 @@ public:
     }
 
     // inserts a new value for tail
-    void append(const int &value) { 
+    void append(const T &value) { 
         Node* newNode = new Node(value); 
         
         tail->next = newNode; 
@@ -36,7 +38,7 @@ public:
     }
     
     // inserts a new value for head
-    void prepend(const int &value) { 
+    void prepend(const T &value) { 
         Node* newNode = new Node(value);
 
         if(length == 0) {
@@ -85,10 +87,10 @@ public:
                 previous_temp = temp; 
                 temp = temp->next; 
             }
-            delete temp; 
             tail = previous_temp; 
             tail->next = nullptr; 
         }
+         delete temp; 
         --length; 
     }
     
@@ -125,7 +127,7 @@ public:
     }
     
     // can replace a node's value at any and returns true if the operation went through
-    bool setNode(const int &index, const int &value) { 
+    bool setNode(const int &index, const T &value) { 
         if(index < 0 || index >= length) {
             std::cout << "Invalid index!\n"; 
             return false; 
@@ -141,7 +143,7 @@ public:
     }
     
     // creates a new node at a set index and returns true if the operation was possible
-    bool insertNode(const int &index, const int &value) { 
+    bool insertNode(const int &index, const T &value) { 
         if(index < 0 || index > length) {
             std::cout << "Invalid index!\n"; 
             return false; 
@@ -182,8 +184,8 @@ public:
             Node* previous_temp = getNode(index-1); 
 
             previous_temp->next = temp->next; 
-            delete temp; 
         }
+         delete temp; 
         --length; 
     }
 
@@ -213,4 +215,5 @@ public:
             temp = head; 
         }
     }
+
 }; 
