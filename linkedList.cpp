@@ -3,12 +3,12 @@
 template<class T>
 class Node {
 public: // everything must be public
-    T value; 
-    Node* next; 
+    T data; 
+    Node<T>* next; 
 
     // Node constructor
-    Node(const T &value)
-    : value(value) {
+    Node(const T &data)
+    : data(data) {
         next = nullptr;
     }
 }; 
@@ -21,25 +21,25 @@ class LinkedList {
 
 public: 
     // constructor that creates the first node
-    LinkedList(const T &value) { 
-        Node* newNode = new Node(value); 
+    LinkedList(const T &data) { 
+        Node<T>* newNode = new Node<T>(data); 
         head = newNode; 
         tail = newNode;  
         length = 1; 
     }
 
-    // inserts a new value for tail
-    void append(const T &value) { 
-        Node* newNode = new Node(value); 
+    // inserts a new data for tail
+    void append(const T &data) { 
+        Node<T>* newNode = new Node<T>(data); 
         
         tail->next = newNode; 
         tail = newNode; 
         length++; 
     }
     
-    // inserts a new value for head
-    void prepend(const T &value) { 
-        Node* newNode = new Node(value);
+    // inserts a new data for head
+    void prepend(const T &data) { 
+        Node<T>* newNode = new Node<T>(data);
 
         if(length == 0) {
             head = newNode;
@@ -90,16 +90,17 @@ public:
             tail = previous_temp; 
             tail->next = nullptr; 
         }
-         delete temp; 
+        
+        delete temp; 
         --length; 
     }
     
     // prints the entire linked list
     void printLL() { 
-        Node* temp = head; 
+        Node<T>* temp = head; 
 
         while(temp != nullptr)  {
-            std::cout << temp->value << ' '; 
+            std::cout << temp->data << ' '; 
             temp = temp->next;
         }
     
@@ -107,8 +108,8 @@ public:
     }
     
     // returns a node's address at a specific index 
-    Node* getNode(const int &index) { 
-        Node* temp = head;
+    Node<T>* getNode(const int &index) { 
+        Node<T>* temp = head;
 
         if(index < 0 || index >= length) {
             std::cout << "Invalid index, returning to the closes index: "; 
@@ -126,38 +127,38 @@ public:
         return temp; 
     }
     
-    // can replace a node's value at any and returns true if the operation went through
-    bool setNode(const int &index, const T &value) { 
+    // can replace a node's data at any and returns true if the operation went through
+    bool setNode(const int &index, const T &data) { 
         if(index < 0 || index >= length) {
             std::cout << "Invalid index!\n"; 
             return false; 
         }
         
-        Node* temp = getNode(index);
+        Node<T>* temp = getNode(index);
         
         if(temp != nullptr) {
-            temp->value = value; 
+            temp->data = data; 
             return true; 
         } 
         return false; 
     }
     
     // creates a new node at a set index and returns true if the operation was possible
-    bool insertNode(const int &index, const T &value) { 
+    bool insertNode(const int &index, const T &data) { 
         if(index < 0 || index > length) {
             std::cout << "Invalid index!\n"; 
             return false; 
         }
 
         if(index == 0) {
-            prepend(value); 
+            prepend(data); 
         }
         else if(index == length) {
-            append(value); 
+            append(data); 
         }
         else {
             Node *temp = getNode(index - 1);
-            Node *newNode = new Node(value); 
+            Node *newNode = new Node<T>(data); 
 
             newNode->next = temp->next; 
             temp->next = newNode; 
@@ -180,8 +181,8 @@ public:
             return deleteLast(); 
         }
         else {
-            Node* temp = getNode(index); 
-            Node* previous_temp = getNode(index-1); 
+            Node<T>* temp = getNode(index); 
+            Node<T>* previous_temp = getNode(index-1); 
 
             previous_temp->next = temp->next; 
         }
@@ -191,7 +192,7 @@ public:
 
     // completely reverses the linked list, it's similar to a swap function in 
     void reverse_LinkedList() {
-        Node* temp = head; 
+        Node<T>* temp = head; 
         head = tail; 
         tail = temp; 
 
@@ -207,7 +208,7 @@ public:
 
     // destructor where we manually delete every Node (for memory allocation purpose)! 
     ~LinkedList() {
-        Node* temp = head; 
+        Node<T>* temp = head; 
 
         while(head != nullptr) {
             head = temp->next; 
@@ -215,5 +216,4 @@ public:
             temp = head; 
         }
     }
-
 }; 
